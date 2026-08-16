@@ -1,18 +1,8 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Ruupert</title>
-	</head>
-	<body>
-		<h1>Tervetuloa sivulle.</h1>
-		<img src="/images/bear-wave.gif" alt="Karhu vilkuttaa" />
-	</body>
-</html>
+<Layout title="Ruupert" description="Ruupert's homepage.">
+  <h1>Tervetuloa sivulle.</h1>
+  <img src="/images/bear-wave.gif" alt="Karhu vilkuttaa" />
+</Layout>

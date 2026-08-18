@@ -1,0 +1,69 @@
+---
+import { getCollection, render } from "astro:content";
+import Prose from "@components/Prose.astro";
+import Layout from "@layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <main class="mx-auto max-w-3xl px-4 py-8">
+    <article>
+      <header class="mb-8">
+        <div class="mb-2 text-sm text-zinc-500 dark:text-zinc-400">
+          <time datetime={post.data.pubDate.toISOString()}>
+            {
+              post.data.pubDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }
+          </time>
+
+          {
+            post.data.updatedDate && (
+              <span class="ml-2 text-xs italic">
+                (Updated on{" "}
+                <time datetime={post.data.updatedDate.toISOString()}>
+                  {post.data.updatedDate.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </time>
+                )
+              </span>
+            )
+          }
+        </div>
+
+        <h1
+          class="mb-3 text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50"
+        >
+          {post.data.title}
+        </h1>
+
+        <p
+          class="text-xl leading-relaxed text-zinc-600 italic dark:text-zinc-300"
+        >
+          {post.data.description}
+        </p>
+
+        <hr class="mt-6 border-zinc-200 dark:border-zinc-800" />
+      </header>
+
+      <Prose>
+        <Content />
+      </Prose>
+    </article>
+  </main>
+</Layout>

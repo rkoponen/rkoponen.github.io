@@ -11,8 +11,26 @@ const { title, description } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ruupert Koponen",
+        "url": "https://ruupert.fi",
+        "jobTitle": "Software Developer",
+        "sameAs": [
+          "https://github.com/rkoponen",
+          "https://linkedin.com/in/ruupert"
+        ],
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Aalto University",
+          "sameAs": "https://www.aalto.fi"
+        },
+        "knowsAbout": ["Web development", "Mobile development"]
+      }
+    </script>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />

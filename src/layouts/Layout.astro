@@ -38,12 +38,34 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
   </head>
   <body
-    class="bg-zinc-50 text-zinc-900 transition-colors duration-200 dark:bg-zinc-950 dark:text-zinc-50"
-    ><nav class="bg-amber-600 p-4 text-white">
-      <ul class="flex space-x-4">
-        <li><a href="/" class="hover:underline">home</a></li>
-        <li><a href="/blog" class="hover:underline">blog</a></li>
-      </ul>
+    class="bg-stone-50 text-stone-900 transition-colors duration-200 dark:bg-stone-950 dark:text-stone-50"
+  >
+    <nav class="p-6">
+      <div class="mx-auto max-w-3xl px-4">
+        <ul class="flex space-x-6 text-sm font-medium">
+          <li>
+            <a
+              href="/"
+              class="transition-colors hover:text-amber-600"
+              >home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/blog"
+              class="transition-colors hover:text-amber-600"
+              >blog</a
+            >
+          </li>
+          <li>
+            <a
+              href="/utilities"
+              class="transition-colors hover:text-amber-600"
+              >utilities</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
     <slot />
   </body>

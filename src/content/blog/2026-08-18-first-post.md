@@ -2,6 +2,7 @@
 title: First post
 description: Everyone starts somewhere.
 pubDate: 2026-08-18
+lang: en
 ---
 
 I start here. Last week was the first week of the rest of my life. My summer

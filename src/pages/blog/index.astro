@@ -9,7 +9,7 @@ const posts = (await getCollection("blog")).sort(
 
 <Layout title="blog">
   <main class="mx-auto max-w-3xl px-4 py-12">
-    <h1 class="mb-8 text-4xl font-extrabold tracking-tight">Posts</h1>
+    <h1 class="mb-8 text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50">Posts</h1>
 
    <ul class="space-y-8">
       {
@@ -18,11 +18,15 @@ const posts = (await getCollection("blog")).sort(
             <a href={`/blog/${post.id}`} class="block space-y-1">
               <!-- Date -->
               <time datetime={post.data.pubDate.toISOString()} class="text-sm text-zinc-500 dark:text-zinc-400">
-                {post.data.pubDate.toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {post.data.pubDate.toLocaleDateString(
+                  post.data.lang === "fi" ? "fi-FI" : "en-US",
+                  {
+                    timeZone: "Europe/Helsinki",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}
               </time>
               
               <!-- Post Title -->

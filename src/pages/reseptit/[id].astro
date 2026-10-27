@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from "astro:content";
+import Prose from "@components/Prose.astro";
+import Layout from "@layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const reseptit = await getCollection("reseptit");
+  return reseptit.map((resepti) => ({
+    params: { id: resepti.id },
+    props: { resepti },
+  }));
+}
+
+const { resepti } = Astro.props;
+const { Content } = await render(resepti);
+---
+
+<Layout title={resepti.data.title} description={resepti.data.description}>
+  <main class="mx-auto max-w-3xl px-4 pt-8 pb-32">
+    <article>
+      <header class="mb-8">
+        <div class="mb-2 flex flex-wrap gap-x-3 text-sm text-zinc-500 dark:text-zinc-400">
+          {resepti.data.valmistusaika && (
+            <span>{resepti.data.valmistusaika}</span>
+          )}
+          {resepti.data.annokset && (
+            <span>{resepti.data.annokset} annosta</span>
+          )}
+          {resepti.data.tagit.length > 0 && (
+            <span>
+              {resepti.data.tagit.map((tagi) => `#${tagi}`).join(" ")}
+            </span>
+          )}
+        </div>
+
+        <h1
+          class="mb-3 text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50"
+        >
+          {resepti.data.title}
+        </h1>
+
+        <p class="text-xl leading-relaxed text-zinc-600 italic dark:text-zinc-300">
+          {resepti.data.description}
+        </p>
+
+        <hr class="mt-6 border-zinc-200 dark:border-zinc-800" />
+      </header>
+
+      <Prose>
+        <Content />
+      </Prose>
+    </article>
+  </main>
+</Layout>

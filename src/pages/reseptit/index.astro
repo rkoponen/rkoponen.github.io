@@ -1,0 +1,55 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const reseptit = (await getCollection("reseptit")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Layout title="Reseptit" description="Ruupertin kokkikirja.">
+  <main class="mx-auto max-w-3xl px-4 py-12">
+    <div class="mb-8 space-y-2">
+      <h1
+        class="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50"
+      >
+        Reseptit
+      </h1>
+      <p class="text-lg text-zinc-600 dark:text-zinc-300">
+        AI-reseptejä jotka on todettu hyviksi.
+      </p>
+    </div>
+
+    <ul class="space-y-8">
+      {
+        reseptit.map((resepti) => (
+          <li class="group">
+            <a href={`/reseptit/${resepti.id}`} class="block space-y-1">
+              <h2 class="text-2xl font-bold text-zinc-900 transition-colors group-hover:text-amber-600 dark:text-zinc-50">
+                {resepti.data.title}
+              </h2>
+
+              <p class="text-zinc-600 dark:text-zinc-300">
+                {resepti.data.description}
+              </p>
+
+              <p class="flex flex-wrap gap-x-3 text-sm text-zinc-500 dark:text-zinc-400">
+                {resepti.data.valmistusaika && (
+                  <span>{resepti.data.valmistusaika}</span>
+                )}
+                {resepti.data.annokset && (
+                  <span>{resepti.data.annokset} annosta</span>
+                )}
+                {resepti.data.tagit.length > 0 && (
+                  <span>
+                    {resepti.data.tagit.map((tagi) => `#${tagi}`).join(" ")}
+                  </span>
+                )}
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>

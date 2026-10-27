@@ -1,14 +1,20 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import RecipeList from "@components/RecipeList.svelte";
 import { getCollection } from "astro:content";
 
 const recipes = (await getCollection("recipes")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const tags = [...new Set(recipes.flatMap((recipe) => recipe.data.tags))].sort(
-  (a, b) => a.localeCompare(b, "fi"),
-);
+const recipeList = recipes.map((recipe) => ({
+  id: recipe.id,
+  title: recipe.data.title,
+  description: recipe.data.description,
+  totalTime: recipe.data.totalTime,
+  servings: recipe.data.servings,
+  tags: recipe.data.tags,
+}));
 ---
 
 <Layout title="Reseptit" description="Ruupertin kokkikirja.">
@@ -24,88 +30,6 @@ const tags = [...new Set(recipes.flatMap((recipe) => recipe.data.tags))].sort(
       </p>
     </div>
 
-    {
-      tags.length > 0 && (
-        <div class="mb-8 flex flex-wrap gap-2" data-tag-filter>
-          <button
-            type="button"
-            data-tag=""
-            aria-pressed="true"
-            class="rounded-full border border-zinc-300 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-amber-600 hover:text-amber-600 aria-pressed:border-amber-600 aria-pressed:bg-amber-600 aria-pressed:text-white dark:border-zinc-700 dark:text-zinc-300 dark:aria-pressed:text-white"
-          >
-            kaikki
-          </button>
-          {tags.map((tag) => (
-            <button
-              type="button"
-              data-tag={tag}
-              aria-pressed="false"
-              class="rounded-full border border-zinc-300 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-amber-600 hover:text-amber-600 aria-pressed:border-amber-600 aria-pressed:bg-amber-600 aria-pressed:text-white dark:border-zinc-700 dark:text-zinc-300 dark:aria-pressed:text-white"
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-      )
-    }
-
-    <ul class="space-y-8" data-recipe-list>
-      {
-        recipes.map((recipe) => (
-          <li class="group" data-tags={recipe.data.tags.join(" ")}>
-            <a href={`/reseptit/${recipe.id}`} class="block space-y-1">
-              <h2 class="text-2xl font-bold text-zinc-900 transition-colors group-hover:text-amber-600 dark:text-zinc-50">
-                {recipe.data.title}
-              </h2>
-
-              <p class="text-zinc-600 dark:text-zinc-300">
-                {recipe.data.description}
-              </p>
-
-              <p class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-zinc-500 dark:text-zinc-400">
-                {recipe.data.totalTime && <span>{recipe.data.totalTime}</span>}
-                {recipe.data.servings && (
-                  <span>{recipe.data.servings} annosta</span>
-                )}
-                {recipe.data.tags.map((tag) => (
-                  <span class="rounded-full border border-zinc-300 px-2 py-0.5 text-xs dark:border-zinc-700">
-                    {tag}
-                  </span>
-                ))}
-              </p>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <RecipeList recipes={recipeList} client:load />
   </main>
-
-  <script>
-    const filter = document.querySelector<HTMLElement>("[data-tag-filter]");
-    const list = document.querySelector<HTMLElement>("[data-recipe-list]");
-
-    if (filter && list) {
-      const buttons = Array.from(
-        filter.querySelectorAll<HTMLButtonElement>("button[data-tag]"),
-      );
-      const recipes = Array.from(
-        list.querySelectorAll<HTMLElement>("li[data-tags]"),
-      );
-
-      buttons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const selected = button.dataset.tag ?? "";
-
-          buttons.forEach((other) => {
-            other.setAttribute("aria-pressed", String(other === button));
-          });
-
-          recipes.forEach((recipe) => {
-            const tags = (recipe.dataset.tags ?? "").split(" ");
-            recipe.hidden = selected !== "" && !tags.includes(selected);
-          });
-        });
-      });
-    }
-  </script>
 </Layout>

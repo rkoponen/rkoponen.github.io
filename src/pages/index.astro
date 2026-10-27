@@ -7,14 +7,14 @@ const posts = (await getCollection("blog"))
   .slice(0, 2);
 ---
 
-<Layout title="Ruupert Koponen" description="Ruupert's homepage.">
+<Layout title="Ruupert Koponen" description="Ruupertin kotisivu.">
   <main class="mx-auto max-w-3xl space-y-6 px-4 py-12">
     <section class="space-y-6">
       <div class="flex items-center space-x-4">
         <h1
           class="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50"
         >
-          Welcome, I'm Ruupert.
+          Tervetuloa sivuilleni.
         </h1>
         <img
           src="/images/bear-wave.gif"
@@ -23,30 +23,36 @@ const posts = (await getCollection("blog"))
         />
       </div>
 
-      <p class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-300">
-        This is my corner of the internet. I'm a software developer based in
-        Finland, interested in cycling, 3D printing, thrifting, and many other
-        things.
-      </p>
+      <!-- <p class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-300">
+        Olen ohjelmistokehittäjä, ja minua kiinnostavat pyöräily, 3D-tulostus,
+        kirpputorit ja monet muut asiat.
+      </p> -->
     </section>
     <div class="border-t border-zinc-200 dark:border-zinc-800"></div>
     <section class="space-y-4">
       <h2
         class="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50"
       >
-        Latest writing
+        Viimeisimmät kirjoitukset
       </h2>
       <ul class="space-y-4">
         {
           posts.map((post) => (
             <li>
               <a href={`/blog/${post.id}`} class="group block">
-                <time class="text-xs text-zinc-500 dark:text-zinc-400">
-                  {post.data.pubDate.toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  })}
+                <time
+                  datetime={post.data.pubDate.toISOString()}
+                  class="text-xs text-zinc-500 dark:text-zinc-400"
+                >
+                  {post.data.pubDate.toLocaleDateString(
+                    post.data.lang === "fi" ? "fi-FI" : "en-US",
+                    {
+                      timeZone: "Europe/Helsinki",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    },
+                  )}
                 </time>
                 <h3 class="text-lg font-semibold text-zinc-800 transition-colors group-hover:text-amber-600 dark:text-zinc-100">
                   {post.data.title}
@@ -60,7 +66,7 @@ const posts = (await getCollection("blog"))
         href="/blog"
         class="inline-block text-sm font-semibold text-amber-600 hover:underline"
       >
-        All posts &rarr;
+        Kaikki kirjoitukset &rarr;
       </a>
     </section>
   </main>

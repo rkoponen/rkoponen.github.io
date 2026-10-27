@@ -13,8 +13,9 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: "Ruupert Koponen",
-    description: "Personal website & blog by Ruupert Koponen",
+    description: "Ruupert Koposen kotisivu ja blogi",
     site: context.site!,
+    customData: `<language>fi</language>`,
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,

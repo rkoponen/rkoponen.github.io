@@ -71,13 +71,6 @@
           {#if recipe.servings}
             <span>{recipe.servings} annosta</span>
           {/if}
-          {#each recipe.tags as tag (tag)}
-            <span
-              class="rounded-full border border-zinc-300 px-2 py-0.5 text-xs dark:border-zinc-700"
-            >
-              {tag}
-            </span>
-          {/each}
         </p>
       </a>
     </li>

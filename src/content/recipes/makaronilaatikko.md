@@ -25,7 +25,7 @@ pubDate: 2026-10-27
 - ½ tl suolaa
 - Ripaus valkopippuria ja muskottipähkinää
 
-## Kuorrutus
+## Kuorrutus (lisätään paiston puolivälissä)
 
 - 150–200 g vahvaa juustoraastetta (esim. cheddar-mozzarella tai emmental)
 - Ekstra-rapeutta kaipaavalle: kourallinen panko-korppujauhoja tai sipsimurskaa juuston päälle
@@ -50,9 +50,13 @@ sekaan myös kourallisen juustoraastetta.
 **Sekoita neste.** Riko kananmunat kulhoon ja vispaa rakenne rikki. Lisää maito,
 kerma sekä mausteet. Kaada seos tasaisesti makaroni-jauhelihaseoksen päälle.
 
-**Kuorruta.** Levitä pinnalle reilu kerros juustoraastetta (ja halutessasi
-sipsimurska tai panko).
+**Paista pohjaa.** Paista vuokaa uunin alatasolla 200 asteessa (kiertoilmalla
+180 °C) noin 20 minuuttia, kunnes munamaito on alkanut hyytyä ja pinta on
+kiinteytynyt.
 
-**Paista ja anna vetäytyä.** Paista uunin alatasolla 200 asteessa (kiertoilmalla
-180 °C) noin 40–50 minuuttia, kunnes pinta on täydellisen kullanruskea ja neste on
-hyytynyt.
+**Kuorruta puolivälissä.** Ota vuoka uunista ja levitä pinnalle reilu kerros
+juustoraastetta (ja halutessasi sipsimurska tai panko). Jatka paistamista vielä
+20–25 minuuttia, kunnes pinta on täydellisen kullanruskea ja neste on hyytynyt.
+
+**Anna vetäytyä.** Ota vuoka uunista ja anna sen seistä 10 minuuttia ennen
+tarjoilua, jotta rakenne tasaantuu.

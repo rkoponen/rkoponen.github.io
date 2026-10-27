@@ -1,0 +1,80 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const workouts = [
+  {
+    name: "Treeni A",
+    rows: [
+      ["Jalkaprässi", "3 x 8-10"],
+      ["Penkkipunnerrus (tanko tai käsipainot)", "3 x 8-10"],
+      ["Kulmasoutu", "3 x 8-12"],
+      ["Pystypunnerrus käsipainoilla", "3 x 8-12"],
+      ["Hauiskääntö käsipainoilla (istuen tai seisten)", "2 x 10-15"],
+      ["Vatsarutistus tai Istumaannousu", "3 x 15-20"],
+      ["Farmarikävely", "3 sarjaa"],
+      ["Ranteiden koukistus käsipainoilla", "3 x 12"],
+      ["Istuen ranteen radiaalideviaatio", "3 x 12"],
+    ],
+  },
+  {
+    name: "Treeni B",
+    rows: [
+      ["Romanialainen maastaveto (kahvakuula)", "3 x 8-10"],
+      ["Ylätalja leveällä myötäotteella", "3 x 8-12"],
+      ["Vinopenkki käsipainoilla", "3 x 8-12"],
+      ["Vipunostot sivuille", "3 x 12-15"],
+      ["Ojentajapunnerrus taljassa", "2 x 10-15"],
+      ["Lankku", "3 x 45-60 s"],
+      ["Roikkuminen", "3 x 3 toistoa"],
+      ["Ranteiden ojennus käsipainoilla", "3 x 12"],
+      ["Kyynärvarren kierrot käsipainoilla", "3 x 12"],
+      ["Ranteen ulnaarideviaatio", "3 x 12"],
+    ],
+  },
+];
+---
+
+<Layout title="Kuntosaliohjelma" description="Ruupertin kuntosaliohjelma.">
+  <main class="mx-auto max-w-3xl space-y-8 px-4 py-12">
+    <div class="space-y-2">
+      <h1
+        class="text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50"
+      >
+        Kuntosaliohjelma
+      </h1>
+      <p class="text-lg text-zinc-600 dark:text-zinc-300">
+        Vuorotellen A ja B.
+      </p>
+    </div>
+
+    {
+      workouts.map((workout) => (
+        <section class="space-y-3">
+          <h2 class="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+            {workout.name}
+          </h2>
+          <div class="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+            <table class="w-full border-collapse text-left text-sm">
+              <thead class="bg-zinc-100 dark:bg-zinc-900">
+                <tr>
+                  <th class="px-4 py-2 font-semibold">Liike</th>
+                  <th class="px-4 py-2 font-semibold whitespace-nowrap">
+                    Sarjat x Toistot
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {workout.rows.map(([exercise, sets]) => (
+                  <tr class="border-t border-zinc-200 dark:border-zinc-800">
+                    <td class="px-4 py-2">{exercise}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">{sets}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ))
+    }
+  </main>
+</Layout>

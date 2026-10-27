@@ -19,7 +19,7 @@ const recipes = defineCollection({
   loader: glob({ base: "./src/content/recipes", pattern: "**/*.md" }),
   schema: z.object({
     title: z.string(),
-    description: z.string(),
+    description: z.string().optional(),
     servings: z.number().optional(),
     totalTime: z.string().optional(),
     tags: z.array(z.string()).default([]),

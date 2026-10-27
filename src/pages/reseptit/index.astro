@@ -15,6 +15,10 @@ const recipeList = recipes.map((recipe) => ({
   servings: recipe.data.servings,
   tags: recipe.data.tags,
 }));
+
+const tags = [...new Set(recipes.flatMap((recipe) => recipe.data.tags))].sort(
+  (a, b) => a.localeCompare(b, "fi"),
+);
 ---
 
 <Layout title="Reseptit" description="Ruupertin kokkikirja.">
@@ -30,6 +34,6 @@ const recipeList = recipes.map((recipe) => ({
       </p>
     </div>
 
-    <RecipeList recipes={recipeList} client:load />
+    <RecipeList recipes={recipeList} {tags} client:load />
   </main>
 </Layout>

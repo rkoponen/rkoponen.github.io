@@ -37,9 +37,11 @@ const { Content } = await render(recipe);
           {recipe.data.title}
         </h1>
 
-        <p class="text-xl leading-relaxed text-zinc-600 italic dark:text-zinc-300">
-          {recipe.data.description}
-        </p>
+        {recipe.data.description && (
+          <p class="text-xl leading-relaxed text-zinc-600 italic dark:text-zinc-300">
+            {recipe.data.description}
+          </p>
+        )}
 
         <hr class="mt-6 border-zinc-200 dark:border-zinc-800" />
       </header>

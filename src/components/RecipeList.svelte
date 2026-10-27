@@ -2,17 +2,16 @@
   interface Recipe {
     id: string;
     title: string;
-    description: string;
+    description?: string;
     totalTime?: string;
     servings?: number;
     tags: string[];
   }
 
-  let { recipes }: { recipes: Recipe[] } = $props();
-
-  const tags = [...new Set(recipes.flatMap((recipe) => recipe.tags))].sort(
-    (a, b) => a.localeCompare(b, "fi"),
-  );
+  let {
+    recipes,
+    tags,
+  }: { recipes: Recipe[]; tags: string[] } = $props();
 
   let selectedTag = $state("");
 
@@ -59,7 +58,9 @@
           {recipe.title}
         </h2>
 
-        <p class="text-zinc-600 dark:text-zinc-300">{recipe.description}</p>
+        {#if recipe.description}
+          <p class="text-zinc-600 dark:text-zinc-300">{recipe.description}</p>
+        {/if}
 
         <p
           class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-zinc-500 dark:text-zinc-400"

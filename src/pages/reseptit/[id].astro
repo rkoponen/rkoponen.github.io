@@ -19,18 +19,20 @@ const { Content } = await render(resepti);
   <main class="mx-auto max-w-3xl px-4 pt-8 pb-32">
     <article>
       <header class="mb-8">
-        <div class="mb-2 flex flex-wrap gap-x-3 text-sm text-zinc-500 dark:text-zinc-400">
+        <div
+          class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-zinc-500 dark:text-zinc-400"
+        >
           {resepti.data.valmistusaika && (
             <span>{resepti.data.valmistusaika}</span>
           )}
           {resepti.data.annokset && (
             <span>{resepti.data.annokset} annosta</span>
           )}
-          {resepti.data.tagit.length > 0 && (
-            <span>
-              {resepti.data.tagit.map((tagi) => `#${tagi}`).join(" ")}
+          {resepti.data.tagit.map((tagi) => (
+            <span class="rounded-full border border-zinc-300 px-2 py-0.5 text-xs dark:border-zinc-700">
+              {tagi}
             </span>
-          )}
+          ))}
         </div>
 
         <h1

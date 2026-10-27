@@ -1,8 +1,8 @@
 ---
 title: Chili sin carne
 description: Täyteläinen kasvischili, jossa linssit, pavut ja tumma suklaa tekevät mausta syvän.
-valmistusaika: 1-2 h
-tagit: [kasvis, chili, pataruoka]
+totalTime: 1-2 h
+tags: [kasvis, chili, pataruoka]
 pubDate: 2026-10-27
 ---
 

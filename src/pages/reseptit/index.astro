@@ -2,11 +2,11 @@
 import Layout from "@layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
-const reseptit = (await getCollection("reseptit")).sort(
+const recipes = (await getCollection("recipes")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const tagit = [...new Set(reseptit.flatMap((resepti) => resepti.data.tagit))].sort(
+const tags = [...new Set(recipes.flatMap((recipe) => recipe.data.tags))].sort(
   (a, b) => a.localeCompare(b, "fi"),
 );
 ---
@@ -25,57 +25,51 @@ const tagit = [...new Set(reseptit.flatMap((resepti) => resepti.data.tagit))].so
     </div>
 
     {
-      tagit.length > 0 && (
-        <div class="mb-8 flex flex-wrap gap-2" data-tagisuodatin>
+      tags.length > 0 && (
+        <div class="mb-8 flex flex-wrap gap-2" data-tag-filter>
           <button
             type="button"
-            data-tagi=""
+            data-tag=""
             aria-pressed="true"
             class="rounded-full border border-zinc-300 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-amber-600 hover:text-amber-600 aria-pressed:border-amber-600 aria-pressed:bg-amber-600 aria-pressed:text-white dark:border-zinc-700 dark:text-zinc-300 dark:aria-pressed:text-white"
           >
             kaikki
           </button>
-          {tagit.map((tagi) => (
+          {tags.map((tag) => (
             <button
               type="button"
-              data-tagi={tagi}
+              data-tag={tag}
               aria-pressed="false"
               class="rounded-full border border-zinc-300 px-3 py-1 text-sm text-zinc-600 transition-colors hover:border-amber-600 hover:text-amber-600 aria-pressed:border-amber-600 aria-pressed:bg-amber-600 aria-pressed:text-white dark:border-zinc-700 dark:text-zinc-300 dark:aria-pressed:text-white"
             >
-              {tagi}
+              {tag}
             </button>
           ))}
         </div>
       )
     }
 
-    <ul class="space-y-8" data-reseptilista>
+    <ul class="space-y-8" data-recipe-list>
       {
-        reseptit.map((resepti) => (
-          <li
-            class="group"
-            data-tagit={resepti.data.tagit.join(" ")}
-            hidden={false}
-          >
-            <a href={`/reseptit/${resepti.id}`} class="block space-y-1">
+        recipes.map((recipe) => (
+          <li class="group" data-tags={recipe.data.tags.join(" ")}>
+            <a href={`/reseptit/${recipe.id}`} class="block space-y-1">
               <h2 class="text-2xl font-bold text-zinc-900 transition-colors group-hover:text-amber-600 dark:text-zinc-50">
-                {resepti.data.title}
+                {recipe.data.title}
               </h2>
 
               <p class="text-zinc-600 dark:text-zinc-300">
-                {resepti.data.description}
+                {recipe.data.description}
               </p>
 
               <p class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-zinc-500 dark:text-zinc-400">
-                {resepti.data.valmistusaika && (
-                  <span>{resepti.data.valmistusaika}</span>
+                {recipe.data.totalTime && <span>{recipe.data.totalTime}</span>}
+                {recipe.data.servings && (
+                  <span>{recipe.data.servings} annosta</span>
                 )}
-                {resepti.data.annokset && (
-                  <span>{resepti.data.annokset} annosta</span>
-                )}
-                {resepti.data.tagit.map((tagi) => (
+                {recipe.data.tags.map((tag) => (
                   <span class="rounded-full border border-zinc-300 px-2 py-0.5 text-xs dark:border-zinc-700">
-                    {tagi}
+                    {tag}
                   </span>
                 ))}
               </p>
@@ -87,31 +81,28 @@ const tagit = [...new Set(reseptit.flatMap((resepti) => resepti.data.tagit))].so
   </main>
 
   <script>
-    const suodatin = document.querySelector<HTMLElement>("[data-tagisuodatin]");
-    const lista = document.querySelector<HTMLElement>("[data-reseptilista]");
+    const filter = document.querySelector<HTMLElement>("[data-tag-filter]");
+    const list = document.querySelector<HTMLElement>("[data-recipe-list]");
 
-    if (suodatin && lista) {
-      const napit = Array.from(
-        suodatin.querySelectorAll<HTMLButtonElement>("button[data-tagi]"),
+    if (filter && list) {
+      const buttons = Array.from(
+        filter.querySelectorAll<HTMLButtonElement>("button[data-tag]"),
       );
-      const reseptit = Array.from(
-        lista.querySelectorAll<HTMLElement>("li[data-tagit]"),
+      const recipes = Array.from(
+        list.querySelectorAll<HTMLElement>("li[data-tags]"),
       );
 
-      napit.forEach((nappi) => {
-        nappi.addEventListener("click", () => {
-          const valittu = nappi.dataset.tagi ?? "";
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const selected = button.dataset.tag ?? "";
 
-          napit.forEach((toinen) => {
-            toinen.setAttribute(
-              "aria-pressed",
-              String(toinen === nappi),
-            );
+          buttons.forEach((other) => {
+            other.setAttribute("aria-pressed", String(other === button));
           });
 
-          reseptit.forEach((resepti) => {
-            const tagit = (resepti.dataset.tagit ?? "").split(" ");
-            resepti.hidden = valittu !== "" && !tagit.includes(valittu);
+          recipes.forEach((recipe) => {
+            const tags = (recipe.dataset.tags ?? "").split(" ");
+            recipe.hidden = selected !== "" && !tags.includes(selected);
           });
         });
       });

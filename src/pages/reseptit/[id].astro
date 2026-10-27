@@ -4,33 +4,29 @@ import Prose from "@components/Prose.astro";
 import Layout from "@layouts/Layout.astro";
 
 export async function getStaticPaths() {
-  const reseptit = await getCollection("reseptit");
-  return reseptit.map((resepti) => ({
-    params: { id: resepti.id },
-    props: { resepti },
+  const recipes = await getCollection("recipes");
+  return recipes.map((recipe) => ({
+    params: { id: recipe.id },
+    props: { recipe },
   }));
 }
 
-const { resepti } = Astro.props;
-const { Content } = await render(resepti);
+const { recipe } = Astro.props;
+const { Content } = await render(recipe);
 ---
 
-<Layout title={resepti.data.title} description={resepti.data.description}>
+<Layout title={recipe.data.title} description={recipe.data.description}>
   <main class="mx-auto max-w-3xl px-4 pt-8 pb-32">
     <article>
       <header class="mb-8">
         <div
           class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-zinc-500 dark:text-zinc-400"
         >
-          {resepti.data.valmistusaika && (
-            <span>{resepti.data.valmistusaika}</span>
-          )}
-          {resepti.data.annokset && (
-            <span>{resepti.data.annokset} annosta</span>
-          )}
-          {resepti.data.tagit.map((tagi) => (
+          {recipe.data.totalTime && <span>{recipe.data.totalTime}</span>}
+          {recipe.data.servings && <span>{recipe.data.servings} annosta</span>}
+          {recipe.data.tags.map((tag) => (
             <span class="rounded-full border border-zinc-300 px-2 py-0.5 text-xs dark:border-zinc-700">
-              {tagi}
+              {tag}
             </span>
           ))}
         </div>
@@ -38,11 +34,11 @@ const { Content } = await render(resepti);
         <h1
           class="mb-3 text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-50"
         >
-          {resepti.data.title}
+          {recipe.data.title}
         </h1>
 
         <p class="text-xl leading-relaxed text-zinc-600 italic dark:text-zinc-300">
-          {resepti.data.description}
+          {recipe.data.description}
         </p>
 
         <hr class="mt-6 border-zinc-200 dark:border-zinc-800" />

@@ -15,14 +15,14 @@ const blog = defineCollection({
   }),
 });
 
-const reseptit = defineCollection({
-  loader: glob({ base: "./src/content/reseptit", pattern: "**/*.md" }),
+const recipes = defineCollection({
+  loader: glob({ base: "./src/content/recipes", pattern: "**/*.md" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    annokset: z.number().optional(),
-    valmistusaika: z.string().optional(),
-    tagit: z.array(z.string()).default([]),
+    servings: z.number().optional(),
+    totalTime: z.string().optional(),
+    tags: z.array(z.string()).default([]),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
   }),
@@ -30,5 +30,5 @@ const reseptit = defineCollection({
 
 export const collections = {
   blog,
-  reseptit,
+  recipes,
 };

@@ -1,10 +1,5 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import { getCollection } from "astro:content";
-
-const posts = (await getCollection("blog"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 2);
 ---
 
 <Layout title="Ruupert Koponen" description="Ruupertin kotisivu.">
@@ -22,47 +17,6 @@ const posts = (await getCollection("blog"))
           class="h-10 w-10 object-contain"
         />
       </div>
-    </section>
-    <div class="border-t border-zinc-200 dark:border-zinc-800"></div>
-    <section class="space-y-4">
-      <h2
-        class="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50"
-      >
-        Viimeisimmät kirjoitukset
-      </h2>
-      <ul class="space-y-4">
-        {
-          posts.map((post) => (
-            <li>
-              <a href={`/blog/${post.id}`} class="group block">
-                <time
-                  datetime={post.data.pubDate.toISOString()}
-                  class="text-xs text-zinc-500 dark:text-zinc-400"
-                >
-                  {post.data.pubDate.toLocaleDateString(
-                    post.data.lang === "fi" ? "fi-FI" : "en-US",
-                    {
-                      timeZone: "Europe/Helsinki",
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    },
-                  )}
-                </time>
-                <h3 class="text-lg font-semibold text-zinc-800 transition-colors group-hover:text-amber-600 dark:text-zinc-100">
-                  {post.data.title}
-                </h3>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <a
-        href="/blog"
-        class="inline-block text-sm font-semibold text-amber-600 hover:underline"
-      >
-        Kaikki kirjoitukset &rarr;
-      </a>
     </section>
   </main>
 </Layout>
